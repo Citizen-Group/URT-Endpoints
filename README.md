@@ -9,6 +9,7 @@ Endpoints are auto detected
 - Update properties
 
 ### Template
+```
 {
   "type": "FeatureCollection",
   "name": "CityBounds",
@@ -36,3 +37,4 @@ Endpoints are auto detected
     }
   ]
 }
+```
