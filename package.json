@@ -1,0 +1,11 @@
+{
+  "name": "endpoint-tester",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app.js",
+  },
+  "dependencies": {
+    "fs-extra": "^2.1.2"
+  }
+}
