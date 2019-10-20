@@ -62,8 +62,8 @@ Alternately you can:
 5. Publish your changes via pull request for review
 
 ### Next Steps
-See [Making a URT Endpoint](docs/making-a-urt-endpoint.md) for step by step information on creating a **URT Endpoint**
-See [Information for endpoint administrators](docs/info-for-endpoint-admins.md) for details on administrating your endpoint
+See [Making a URT Endpoint](making-a-urt-endpoint.md) for step by step information on creating a **URT Endpoint**
+See [Information for endpoint administrators](info-for-endpoint-admins.md) for details on administrating your endpoint
 
 # Quick technical information for nerds
 - GeoJSON
