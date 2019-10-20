@@ -63,6 +63,7 @@ Alternately you can:
 
 ### Next Steps
 See [Making a URT Endpoint](making-a-urt-endpoint.md) for step by step information on creating a **URT Endpoint**
+
 See [Information for endpoint administrators](info-for-endpoint-admins.md) for details on administrating your endpoint
 
 # Quick technical information for nerds
