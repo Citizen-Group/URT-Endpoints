@@ -45,4 +45,4 @@ A list of server providers is also listed here: https://wiki.open311.org/GeoRepo
 
 ## We are here to help you help others
 
-Get in touch if there is anything we can help with. Our mission is connect those who want to help, with those who have the means help to the issues that need help. All while making it easier, low cost and removing labour, overhead, redundancy and waste.
+Get in touch if there is anything we can help with. Our mission is connect those who want to help, with those who have the means help, to the issues that need help. All while making it easier, low cost and removing labour, overhead, redundancy and waste.

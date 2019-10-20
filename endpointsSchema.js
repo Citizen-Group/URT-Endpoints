@@ -6,6 +6,7 @@
  *
  * TODO: We will need to make location many large polygons of many points.
  * TODO: Handle conflicts where two parties occupy the same place.
+ * TODO: Rewrite this section due to changes
  * 
  * _id (hidden) - is used for localization/ref/ect
  * displayName  - visual name to display in local language
@@ -31,20 +32,54 @@ var Schema = mongoose.Schema;
 
 var endpointsSchema = new Schema({
     pk_epid: String,
-    client_information: { 
+    client_information: {
         displayName: { type: String, Default: "" },
         description: { type: String, Default: "" },
+        owner: { type: String },
+        ownerEmail: { type: String },
+        usesSchemaVer: { type: String }
     },
     isActive: { type: Boolean, Default: true },
-    coverage: { type: { type: String, default: "Polygon" }, coordinates : { type : [] } },
+    last_queried: Date,
+    last_updated: Date,
+    coverage: { type: { type: String, default: "Polygon" }, coordinates: { type: [] } },
+    subServices: {
+        addressLookup: {
+            url: { type: String },
+            params: { type: [] },
+            // Functions for processing the request
+            processing: {
+                before: {},
+                after: {}
+            }
+        },
+        roadLookup: {
+            url: { type: String },
+            params: { type: [] },
+            // Functions for processing the request
+            processing: {
+                before: {}, 
+                after: {}
+            }
+        },
+        intercetionLookup: {
+            url: { type: String },
+            params: { type: [] },
+            // Functions for processing the request
+            processing: {
+                before: {},
+                after: {}
+            }
+        }
+    },
     servicePaths: {
         GEOAPIV2: {
-            api_key: { 
+            api_key: {
                 test: { type: String },
                 dev: { type: String },
                 production: { type: String }
             },
-            url: { 
+            url: {
                 test: { type: String },
                 dev: { type: String },
                 production: { type: String }
@@ -54,37 +89,37 @@ var endpointsSchema = new Schema({
                 test: {
                     interval: {
                         duration: { type: Number },
-                        max: { type: Number}
+                        max: { type: Number }
                     },
                     threshold: {
                         duration: { type: Number },
-                        max: { type: Number}
-                    }   
+                        max: { type: Number }
+                    }
                 },
                 dev: {
                     interval: {
                         duration: { type: Number },
-                        max: { type: Number}
+                        max: { type: Number }
                     },
                     threshold: {
                         duration: { type: Number },
-                        max: { type: Number}
-                    }    
+                        max: { type: Number }
+                    }
                 },
                 production: {
                     interval: {
                         duration: { type: Number },
-                        max: { type: Number}
+                        max: { type: Number }
                     },
                     threshold: {
                         duration: { type: Number },
-                        max: { type: Number}
-                    }    
+                        max: { type: Number }
+                    }
                 }
             }
-        },    
+        },
         EMAIL: {
-            url: { 
+            url: {
                 test: { type: String },
                 dev: { type: String },
                 production: { type: String }
@@ -93,54 +128,50 @@ var endpointsSchema = new Schema({
                 test: {
                     interval: {
                         duration: { type: Number },
-                        max: { type: Number}
+                        max: { type: Number }
                     },
                     threshold: {
                         duration: { type: Number },
-                        max: { type: Number}
-                    }   
+                        max: { type: Number }
+                    }
                 },
                 dev: {
                     interval: {
                         duration: { type: Number },
-                        max: { type: Number}
+                        max: { type: Number }
                     },
                     threshold: {
                         duration: { type: Number },
-                        max: { type: Number}
-                    }    
+                        max: { type: Number }
+                    }
                 },
                 production: {
                     interval: {
                         duration: { type: Number },
-                        max: { type: Number}
+                        max: { type: Number }
                     },
                     threshold: {
                         duration: { type: Number },
-                        max: { type: Number}
-                    }    
+                        max: { type: Number }
+                    }
                 }
             }
-        }, 
+        },
     },
-    // Manual implmentation of service types. 
-    // We need this because behavior is custom per end point
-    // Consider rolling in the endpoint discovery here with auto parsing
-    // This should also be exposed to the clients for modifications
-    // Each service type is paired with all services paths that can handle it.
-    serviceTypes: {
-        POTHOLES: {
-            GEOAPIV2: {
-                service_code: { type: String }     // Service ID
-            },
-            EMAIL: {
-                subject: {type: String },
-                body: {type: String}
-            }
-        }
-    }
+    /** 
+     * Implmentation of service types 
+     * We need this because each endpoint has unique behavior and names for each service type
+     */
+    // Todo: rolling in the endpoint discovery here with auto parsing
+    // Todo: expose to the clients for self adminstration
+    /** 
+     * * Note: Internally each service type is paired with all services paths that can handle it. 
+     *   If its not listed. Its not supported via that path.
+     */
+    serviceTypes: [serviceRequestTypeDetails]
+
 });
 
-endpointsSchema.index({coverage: "2dsphere"});
+endpointsSchema.index({ coverage: "2dsphere" });
 
 module.exports = mongoose.model('Endpoints', endpointsSchema);
