@@ -6,10 +6,11 @@
  * See: https://github.com/Citizen-Group/URT-Endpoints
  */
 var fs = require('fs');
+var epm = require('./endpointManager');
 
-// Include model files
-fs.readdirSync(__dirname + '/').forEach(function(filename) {
-    if (~filename.indexOf('.js')) {
-       console.log(__dirname + '/' + filename);
-    } 
-});
+var file = {
+    "name" : "Doggy",
+    "path" : "./"
+}
+
+epm.load(file);
